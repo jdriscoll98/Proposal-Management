@@ -9,6 +9,10 @@ import datetime
 from datetime import timedelta
 from django.utils import timezone
 
+from django.views.generic.base import TemplateView
+
 #-------------------------------------------------------------------------------
 # Page Views
 #-------------------------------------------------------------------------------
+class HomepageView(TemplateView):
+    template_name = 'website/homepage.html'
