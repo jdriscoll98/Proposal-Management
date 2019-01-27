@@ -1,0 +1,18 @@
+[
+  {
+    "model": "website.Employee",
+    "pk": 1,
+    "fields": {
+      "name": "Jack",
+      "email": "jackdriscoll777@gmail.com"
+    }
+  },
+  {
+    "model": "website.Employee",
+    "pk": 2,
+    "fields": {
+      "name": "Austin",
+      "email": "AustinBagelyIII@gmail.com"
+    }
+  }
+]

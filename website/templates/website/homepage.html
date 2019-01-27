@@ -1,0 +1,195 @@
+{% extends 'website/base.html' %}
+
+{% block custom_css %}
+{% endblock custom_css %}
+
+{% block content %}
+{% include 'website/server_messages.html' %}
+
+<div class="container">
+  <div class="row text-info">
+    <div class="col text-center text-info">Hello
+      </div>
+      </div>
+      <div class="row">
+        <div class="col text-center text-success">Alyssa Was Here</div>
+        <div>
+    </div>
+</div>
+
+
+
+
+<div class="container"><br/>
+  <div class="row">
+    <div class = "col text-center">
+      <h4 class="text-danger">{{ employee.name }}'s Employement Summary</h4>
+    </div>
+  </div>
+<br/>
+<br/>
+<br/>
+  <div class="row">
+    <div class="col-4 text-center link-danger">
+      <a>Request Time off</a>
+    </div>
+    <div class="col">
+      |
+    </div>
+    <div class="col-3 text-center link-danger">
+      <a href="{% url 'website:ShiftsAvailableView' %}">Shifts available</a>
+    </div>
+    <div class="col">
+      |
+    </div>
+    <div class="col-3 text-left link-danger">
+      <a href="">Ranking</a>
+    </div>
+  </div>
+<br/>
+<br/>
+  <div class="row">
+    <div class="col text-center text-danger">
+      <a href="">Either submit availability or schedule</a>
+      <br/>
+      <br/>
+    </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+          <button class="btn btn-success next"></button></div>
+        <div class="col-5">
+            <text> Week of {{ date }} - {{ end_date }}</text></div>
+        <div class="col-3">
+          <button class="btn previous"></button></div>
+    </div>
+  </div>
+  <!-- for loop to create table -->
+<table class="table text-right">
+  <thead>
+    <tr>
+      <th scope="col-6"></th>
+      <th scope="col-6">Monday</th>
+      <th scope="col-6">Tuesday</th>
+      <th scope="col-6">Wednesday</th>
+      <th scope="col-6">Thursday</th>
+      <th scope="col-6">Friday</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Breakfast</th>
+        {% if MondayBreakfast %}
+          <td class="request-time-off" href="{% url 'website:post_shift' pk=MondayBreakfast.pk %}" bgcolor="#2ECC71"></td>
+        {% else %}
+          <td class="request-time-off" ></td>
+        {% endif %}
+        {% if TuesdayBreakfast %}
+          <td class="request-time-off" href="{% url 'website:post_shift' pk=TuesdayBreakfast.pk %}" bgcolor="#2ECC71"></td>
+        {% else %}
+          <td></td>
+        {% endif %}
+        {% if WednesdayBreakfast %}
+          <td class="request-time-off" href="{% url 'website:post_shift' pk=WednesdayBreakfast.pk %}" bgcolor="#2ECC71"></td>
+        {% else %}
+          <td></td>
+        {% endif %}
+        {% if ThursdayBreakfast %}
+          <td class="request-time-off" href="{% url 'website:post_shift' pk=ThursdayBreakfast.pk %}" bgcolor="#2ECC71"></td>
+        {% else %}
+          <td></td>
+        {% endif %}
+        {% if FridayBreakfast %}
+          <td class="request-time-off" href="{% url 'website:post_shift' pk=FridayBreakfast.pk %}" bgcolor="#2ECC71"></td>
+        {% else %}
+          <td></td>
+        {% endif %}
+    </tr>
+    <tr>
+      <th scope="row">Lunch</th>
+      {% if MondayLunch %}
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=MondayLunch.pk %}" bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
+      {% if TuesdayLunch %}
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=TuesdayLunch.pk %}"  bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
+      {% if WednesdayLunch %}
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=WednesdayLunch.pk %}" bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
+      {% if ThursdayLunch %}
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=ThursdayLunch.pk %}" bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
+      {% if FridayLunch %}
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=FridayLunch.pk %}" bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
+    </tr>
+    <tr>
+      <th scope="row">Dinner</th>
+      {% if MondayDinner %}
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=MondayDinner.pk %}" bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
+      {% if TuesdayDinner %}
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=TuesdayDinner.pk %}" bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
+      {% if WednesdayDinner %}
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=WednesdayDinner.pk %}" bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
+      {% if ThursdayDinner %}
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=ThursdayDinner.pk %}" bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
+      {% if FridayDinner %}
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=FridayDinner.pk %}" bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
+    </tr>
+  </tbody>
+</table>
+<br/>
+<br/>
+  <div class="row">
+    <div class="col-8 text-left">
+      Hours Scheduled:
+    </div>
+    <div class="col text-left">
+      {{ Hours }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-8 text-left">
+      Estimated Earnings (2 weeks):
+    </div>
+    <div class="col">
+      ${{ money }}
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+//------------------------------------------------------
+$('.request-time-off').click(function() {
+  direct_to_href($(this));
+});
+//------------------------------------------------------
+</script>
+{% endblock js %}
