@@ -1,8 +1,11 @@
 from django.db import models
 
+from django.utils import timezone
+
 # Create your models here.
 class Proposal(models.Model):
     name = models.CharField(max_length=100) #name to remember client by
+    date_added = models.DateTimeField(default=timezone.now)
     type = models.CharField(max_length=100) # type of job: website: app: smart solution
     budget = models.IntegerField() # price of job
     source = models.CharField(max_length=100) # where the job came from
