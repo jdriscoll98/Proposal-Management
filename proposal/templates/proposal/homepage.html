@@ -6,8 +6,47 @@
 {% block content %}
 {% include 'website/server_messages.html' %}
 
-
-{% endblock content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col text-center">
+      <h1>Current Open Proposals</h1>
+    </div>
+    </div>
+    <br/>
+    <div class="row">
+    <div class="col">
+        <table class="table">
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Date Added</th>
+            <th>Budget</th>
+            <th>Source</th>
+            <th>Job Link</th>
+            <th>Propsoal Link</th>
+            <th>Vote (erica)</th>
+            <th>Vote (bobby)</th>
+            <th>Vote (cole)</th>
+          </tr>
+          {% for proposal in proposals %}
+            <tr>
+              <td>{{ proposal.name }}</td>
+              <td>{{ proposal.type }}</td>
+              <td>{{ proposal.date_added}}</td>
+              <td>{{ proposal.budget }}</td>
+              <td>{{ proposal.source }}</td>
+              <td>{{ proposal.job_link }}</td>
+              <td>{{ proposal.proposal_link }}</td>
+              <td>Insert voting button here</td>
+              <td>Insert voting button here</td>
+              <td>Insert voting button here</td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+  </div>
+</div>
+  {% endblock content %}
 
 {% block js %}
 <script>

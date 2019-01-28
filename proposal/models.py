@@ -5,7 +5,7 @@ from django.utils import timezone
 # Create your models here.
 class Proposal(models.Model):
     name = models.CharField(max_length=100) #name to remember client by
-    date_added = models.DateTimeField(default=timezone.now)
+    date_added = models.DateTimeField(auto_now=True)
     type = models.CharField(max_length=100) # type of job: website: app: smart solution
     budget = models.IntegerField() # price of job
     source = models.CharField(max_length=100) # where the job came from
@@ -19,7 +19,7 @@ class Proposal(models.Model):
     def __str__(self):
         return str(self.name)
 
-    def ready_to_send(self):
+    def ready_to_revise(self):
         if self.num_of_upvotes >= 2:
             return True
         else:
