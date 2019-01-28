@@ -24,5 +24,5 @@ class Proposal(models.Model):
 
 class Comment(models.Model):
     text = models.CharField(max_length=1000)
-    author = models.CharField(max_length=100)
+    author = models.CharField(blank=True, max_length=100)
     proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE)
