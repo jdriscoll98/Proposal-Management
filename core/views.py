@@ -19,7 +19,7 @@ def login(request):
 				raw_password = form.cleaned_data.get('password')
 				user = auth_authenticate(username=username, password=raw_password)
 				auth_login(request, user)
-				next_page = request.GET.get('next', 'website:homepage')
+				next_page = request.GET.get('next', 'proposal:homepage')
 				return redirect(next_page)
 		else:
 			raise SuspiciousOperation()
@@ -35,5 +35,5 @@ def login(request):
 # Logout
 def logout(request):
 	auth_logout(request)
-	next_page = request.GET.get('next', 'website:homepage')
+	next_page = request.GET.get('next', 'proposal:homepage')
 	return redirect(next_page)
