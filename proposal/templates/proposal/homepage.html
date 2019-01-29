@@ -44,7 +44,7 @@ h5 {
         <table id="proposal-table" class="table">
           <thead>
         <tr>
-          <th colspan="6" class="heading">
+          <th colspan="9" class="heading">
             <h2>
               Open Proposals
               <i class="fas fa-plus" href="{% url 'proposal:add_proposal' %}"></i>
@@ -56,17 +56,26 @@ h5 {
           <tr>
             <th>Name</th>
             <th>Date Added</th>
-            <th>Vote(Erica)</th>
-            <th>Vote(Bobby)</th>
-            <th>Vote(Cole)</th>
+            <th colspan="2">Vote(Erica)</th>
+            <th colspan="2">Vote(Bobby)</th>
+            <th colspan="2">Vote(Cole)</th>
           </tr>
           {% for proposal in open_proposals %}
             <tr id="row-{{proposal.pk}}">
               <td><a href="{% url 'proposal:view_proposal' proposal.pk %}">{{ proposal.name }}</a></td>
               <td>{{ proposal.date_added|date:"M d"}}</td>
-              <td>Vote</td>
-              <td>Vote</td>
-              <td>Vote</td>
+              <td>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            </td>
+              <td>
+                <i id="no-erica" class="fa fa-times" aria-hidden="true"></i>
+              </td>
+              <td>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            </td>
+              <td><i id="no-bobby" class="fa fa-times" aria-hidden="true"></i></td>
+              <td><i class="fa fa-check" aria-hidden="true"></i></td>
+              <td><i id="no-cole" class="fa fa-times" aria-hidden="true"></i></td>
               <td>
               <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>
               </td>
@@ -84,6 +93,11 @@ h5 {
 // Add a Proposal
 $('.fa-plus').click(function() {
   window.location.href = $(this).attr('href');
+});
+
+$('.fa-times').click(function() {
+  var element = document.getElementById('#no-erica');
+    element.parentNode.removeChild(element);
 });
 // Delete a Proposal
 $('.fa-trash-alt').click(function() {
