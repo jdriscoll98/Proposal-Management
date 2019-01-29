@@ -62,7 +62,7 @@ h5 {
           </tr>
           {% for proposal in open_proposals %}
             <tr id="row-{{proposal.pk}}">
-              <td><a href="">{{ proposal.name }}</a></td>
+              <td><a href="{% url 'proposal:view_proposal' proposal.pk %}">{{ proposal.name }}</a></td>
               <td>{{ proposal.date_added|date:"M d"}}</td>
               <td>Vote</td>
               <td>Vote</td>

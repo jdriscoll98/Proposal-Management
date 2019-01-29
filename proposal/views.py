@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.detail import DetailView
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -26,6 +27,9 @@ class AddPropsalView(LoginRequiredMixin, CreateView):
     model = Proposal
     form_class = ProposalForm
     success_url = reverse_lazy('proposal:homepage')
+
+class ViewProposalView(LoginRequiredMixin, DetailView):
+    model = Proposal
 
 class UpdateProposalView(LoginRequiredMixin, UpdateView):
     template_name = ('proposal/update_proposal.html')
