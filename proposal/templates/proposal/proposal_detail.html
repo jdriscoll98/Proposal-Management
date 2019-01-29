@@ -86,6 +86,11 @@ td {
             <a href="{{ object.proposal_link }}">{{ object.proposal_link }}</a>
           </td>
         </tr>
+        <tr>
+          <td colspan="2">
+              <a href="{% url 'proposal:update_proposal' object.pk %}"class="btn btn-success col-12">Update Proposal</a>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>

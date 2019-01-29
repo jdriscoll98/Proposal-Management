@@ -17,6 +17,7 @@ class Proposal(models.Model):
     job_link = models.URLField(null=True) # link to job if from online source
     proposal_link = models.URLField(null=True) # link to proposal if online
     num_of_upvotes = models.IntegerField(default=0) # votes to send proposal to lient
+    num_of_downvotes = models.IntegerField(default=0) # votes to ~not~ send proposal to lient
     proposal_revised = models.BooleanField(default=False) # if the proposal has been revised
     sent = models.BooleanField(default = False) # if the proposal has been sent
     status = models.CharField(max_length=100, choices=acceptance_choices, default='pending') # status of proposal

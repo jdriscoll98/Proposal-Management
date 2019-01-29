@@ -44,7 +44,7 @@ h5 {
         <table id="proposal-table" class="table">
           <thead>
         <tr>
-          <th colspan="9" class="heading">
+          <th colspan="5" class="heading">
             <h2>
               Open Proposals
               <i class="fas fa-plus" href="{% url 'proposal:add_proposal' %}"></i>
@@ -56,26 +56,18 @@ h5 {
           <tr>
             <th>Name</th>
             <th>Date Added</th>
-            <th colspan="2">Vote(Erica)</th>
-            <th colspan="2">Vote(Bobby)</th>
-            <th colspan="2">Vote(Cole)</th>
+            <th class="center" colspan="2" >Vote(Y/N)</th>
           </tr>
           {% for proposal in open_proposals %}
             <tr id="row-{{proposal.pk}}">
               <td><a href="{% url 'proposal:view_proposal' proposal.pk %}">{{ proposal.name }}</a></td>
               <td>{{ proposal.date_added|date:"M d"}}</td>
               <td>
-              <i class="fa fa-check" aria-hidden="true"></i>
-            </td>
+                <i class="btn btn-success vote" href="{% url 'proposal:vote_proposal' pk=proposal.pk vote='Yes' %}">Yes</i>
+                </td>
               <td>
-                <i id="no-erica" class="fa fa-times" aria-hidden="true"></i>
-              </td>
-              <td>
-              <i class="fa fa-check" aria-hidden="true"></i>
-            </td>
-              <td><i id="no-bobby" class="fa fa-times" aria-hidden="true"></i></td>
-              <td><i class="fa fa-check" aria-hidden="true"></i></td>
-              <td><i id="no-cole" class="fa fa-times" aria-hidden="true"></i></td>
+                <i class="btn btn-danger vote" href="{% url 'proposal:vote_proposal' pk=proposal.pk vote='No' %}">No</i>
+                </td>
               <td>
               <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>
               </td>
@@ -94,10 +86,19 @@ h5 {
 $('.fa-plus').click(function() {
   window.location.href = $(this).attr('href');
 });
-
-$('.fa-times').click(function() {
-  var element = document.getElementById('#no-erica');
-    element.parentNode.removeChild(element);
+// vote on a proposal
+$('.vote').click(function() {
+  var id = $(this).attr('id');
+  if(confirm("Confirm you would like to vote on this propsoal")) {
+    $.get($(this).attr('href'), {}, function(data) {
+      if(data.success) {
+        alert("Successfly voted!")
+      }
+      else {
+        console.log("Could not vote on this proposal at this time!");
+      }
+    });
+  }
 });
 // Delete a Proposal
 $('.fa-trash-alt').click(function() {

@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 from django.urls import path
-from proposal.views import HomepageView, AddPropsalView, DeleteProposalView, ViewProposalView
+from proposal.views import HomepageView, AddPropsalView, DeleteProposalView, ViewProposalView, ProposalVoteView, UpdateProposalView
 
 # Application Routes (URLs)
 
@@ -12,4 +12,6 @@ urlpatterns = [
 		url(r'^add-proposal/$', AddPropsalView.as_view(), name='add_proposal'),
 		url(r'^delete-proposal/(?P<pk>\d+)/$', DeleteProposalView.as_view(), name='delete_proposal'),
 		url(r'^view-proposal/(?P<pk>\d+)/$', ViewProposalView.as_view(), name='view_proposal'),
+		url(r'^update-proposal/(?P<pk>\d+)/$', UpdateProposalView.as_view(), name='update_proposal'),
+		url(r'^vote-yes-proposal/(?P<pk>\d+)/(?P<vote>\w+)/$', ProposalVoteView.as_view(), name='vote_proposal'),
 		]
