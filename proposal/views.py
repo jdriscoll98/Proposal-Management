@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -23,6 +23,12 @@ class HomepageView(LoginRequiredMixin, TemplateView):
 
 class AddPropsalView(LoginRequiredMixin, CreateView):
     template_name = 'proposal/add_proposal.html'
+    model = Proposal
+    form_class = ProposalForm
+    success_url = reverse_lazy('proposal:homepage')
+
+class UpdateProposalView(LoginRequiredMixin, UpdateView):
+    template_name = ('proposal/update_proposal.html')
     model = Proposal
     form_class = ProposalForm
     success_url = reverse_lazy('proposal:homepage')
