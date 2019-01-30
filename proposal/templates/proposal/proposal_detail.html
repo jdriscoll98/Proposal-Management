@@ -91,6 +91,35 @@ td {
               <a href="{% url 'proposal:update_proposal' object.pk %}"class="btn btn-success col-12">Update Proposal</a>
           </td>
         </tr>
+        <tr>
+          <td colspan="2">
+              <a href="{% url 'proposal:add_comment' object.pk %}"class="btn btn-success col-12">Comment on Proposal</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    {% if object.has_comments %}
+    <table id="monitors-table" class="table">
+      <thead>
+        <tr>
+          <th colspan="3" class="heading">
+            <h2>Comments
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for comment in object.has_comments %}
+          <tr id="row-{{monitor.pk}}">
+            <td>{{ comment.author }}</td>
+            <td>
+              {{ comment.text }}
+            </td>
+            <td style="text-align:right;">
+              <i id="{{ monitor.pk }}" class="far fa-trash-alt" href=""></i>
+            </td>
+          </tr>
+        {% endfor %}
+        {% endif %}
       </tbody>
     </table>
   </div>

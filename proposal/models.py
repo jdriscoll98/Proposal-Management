@@ -32,7 +32,7 @@ class Proposal(models.Model):
             return False
 
     def has_comments(self):
-        return Comment.objects.filter(project=self)
+        return Comment.objects.filter(proposal=self)
 
 class Comment(models.Model):
     text = models.CharField(max_length=1000)

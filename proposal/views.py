@@ -9,8 +9,8 @@ from proposal.mixins import AjaxFormResponseMixin
 
 from django.http import JsonResponse
 
-from proposal.models import Proposal
-from proposal.forms import ProposalForm
+from proposal.models import Proposal, Comment
+from proposal.forms import ProposalForm, CommentForm
 
 # Create your views here.
 class HomepageView(LoginRequiredMixin, TemplateView):
@@ -19,7 +19,8 @@ class HomepageView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = {
             'open_proposals' : Proposal.objects.filter(sent=False, num_of_upvotes__lt=2),
-            'ready_to_revise_proposals': Proposal.objects.filter(num_of_upvotes__gte=2),
+            'ready_to_revise_proposals': Proposal.objects.filter(num_of_upvotes__gte=2, proposal_revised=False),
+            'ready_to_send_proposals': Proposal.objects.filter(proposal_revised=True, sent=False),
         }
         return context
 
@@ -43,7 +44,7 @@ class UpdateAjaxView(UpdateProposalView):
         if self.request.is_ajax(): #checks if the request is ajax
             return JsonResponse({'success': True}, safe=False, **response_kwargs)
         else: # if not, returns a normal response
-            return super(DeleteMonitorView,self).render_to_response(context, **response_kwargs)
+            return super(UpdateProposalView ,self).render_to_response(context, **response_kwargs)
 
 class ProposalVoteView(UpdateAjaxView):
     def get(self, request, *args, **kwargs):
@@ -52,6 +53,23 @@ class ProposalVoteView(UpdateAjaxView):
             self.object.num_of_upvotes += 1
         else:
             self.object.num_of_downvotes += 1
+        self.object.save()
+        context = self.get_context_data(object=self.object) # we dont need this but its safe to have
+        return self.render_to_response(context)
+
+class ProposalRevisedView(UpdateAjaxView):
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.proposal_revised = True
+        self.object.save()
+        context = self.get_context_data(object=self.object) # we dont need this but its safe to have
+        return self.render_to_response(context)
+
+class SendProposalView(UpdateAjaxView):
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.ready_to_revise = False
+        self.object.sent = True
         self.object.save()
         context = self.get_context_data(object=self.object) # we dont need this but its safe to have
         return self.render_to_response(context)
@@ -72,3 +90,22 @@ class DeleteProposalView(LoginRequiredMixin, DeleteView):
             return JsonResponse({'deleted': True}, safe=False, **response_kwargs)
         else: # if not, returns a normal response
             return super(DeleteMonitorView,self).render_to_response(context, **response_kwargs)
+
+class AddCommentView(CreateView):
+    template_name = 'proposal/comment.html'
+    model = Comment
+    form_class = CommentForm
+
+    def get_success_url(self):
+        return self.request.POST.get('next')
+
+    def get_context_data(self, **kwargs):
+        context = super(AddCommentView, self).get_context_data(**kwargs)
+        context['next'] = reverse_lazy('proposal:view_proposal', kwargs={'pk': self.kwargs.get('pk')})
+        return context
+
+    def get_initial(self):
+        proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
+        return {
+            'proposal': proposal ,
+        }

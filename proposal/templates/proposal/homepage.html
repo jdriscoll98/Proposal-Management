@@ -77,6 +77,74 @@ h5 {
         </table>
       </div>
   </div>
+  <div class="row">
+    <div class="col-sm-10 offset-sm-1">
+        <table id="proposal-table" class="table">
+          <thead>
+        <tr>
+          <th colspan="5" class="heading">
+            <h2>
+              Ready to Revise Proposals
+            </h2>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <th>Name</th>
+            <th>Date Added</th>
+            <th class="center">Revised?</th>
+          </tr>
+          {% for proposal in ready_to_revise_proposals %}
+            <tr id="row-{{proposal.pk}}">
+              <td><a href="{% url 'proposal:view_proposal' proposal.pk %}">{{ proposal.name }}</a></td>
+              <td>{{ proposal.date_added|date:"M d"}}</td>
+              <td>
+                <i class="btn btn-success revised" href="{% url 'proposal:revise_proposal' pk=proposal.pk %}">Ready to Send</i>
+                </td>
+              <td>
+              <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-10 offset-sm-1">
+        <table id="proposal-table" class="table">
+          <thead>
+        <tr>
+          <th colspan="5" class="heading">
+            <h2>
+              Ready to Send Proposals
+            </h2>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <th>Name</th>
+            <th>Date Added</th>
+            <th class="center">Send?</th>
+          </tr>
+          {% for proposal in ready_to_send_proposals %}
+            <tr id="row-{{proposal.pk}}">
+              <td><a href="{% url 'proposal:view_proposal' proposal.pk %}">{{ proposal.name }}</a></td>
+              <td>{{ proposal.date_added|date:"M d"}}</td>
+              <td>
+                <i class="btn btn-success send" href="{% url 'proposal:send_proposal' pk=proposal.pk %}">Send</i>
+                </td>
+              <td>
+              <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+  </div>
   {% endblock content %}
 
 {% block js %}
@@ -92,10 +160,41 @@ $('.vote').click(function() {
   if(confirm("Confirm you would like to vote on this propsoal")) {
     $.get($(this).attr('href'), {}, function(data) {
       if(data.success) {
-        alert("Successfly voted!")
+        alert("Successfly voted!");
+        location.reload();
       }
       else {
         console.log("Could not vote on this proposal at this time!");
+      }
+    });
+  }
+});
+// Mark a proposal as ready to send
+$('.revised').click(function() {
+  var id = $(this).attr('id');
+  if(confirm("Confirm this proposal is ready to send")) {
+    $.get($(this).attr('href'), {}, function(data) {
+      if(data.success) {
+        alert("Successfly revised!");
+        location.reload();
+      }
+      else {
+        console.log("Could not update this proposal at this time!");
+      }
+    });
+  }
+});
+// send a proposal
+$('.send').click(function() {
+  var id = $(this).attr('id');
+  if(confirm("Confirm this proposal has been sent")) {
+    $.get($(this).attr('href'), {}, function(data) {
+      if(data.success) {
+        alert("Successfly sent!");
+        location.reload();
+      }
+      else {
+        console.log("Could not update this proposal at this time!");
       }
     });
   }
