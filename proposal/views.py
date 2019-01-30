@@ -91,7 +91,7 @@ class DeleteProposalView(LoginRequiredMixin, DeleteView):
         else: # if not, returns a normal response
             return super(DeleteMonitorView,self).render_to_response(context, **response_kwargs)
 
-class AddCommentView(CreateView):
+class AddCommentView(LoginRequiredMixin, CreateView):
     template_name = 'proposal/comment.html'
     model = Comment
     form_class = CommentForm
@@ -109,3 +109,12 @@ class AddCommentView(CreateView):
         return {
             'proposal': proposal ,
         }
+
+class SentProposalView(LoginRequiredMixin, TemplateView):
+    template_name = 'proposal/sent_proposals.html'
+
+    def get_context_data(self, **kwargs):
+        context = {
+            'sent_proposals' : Proposal.objects.filter(sent=True),
+        }
+        return context
