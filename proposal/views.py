@@ -18,7 +18,7 @@ class HomepageView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = {
-            'open_proposals' : Proposal.objects.filter(sent=False, num_of_upvotes__lt=2),
+            'open_proposals' : Proposal.objects.filter(sent=False, num_of_upvotes__lt=2, num_of_downvotes__lt=2),
             'ready_to_revise_proposals': Proposal.objects.filter(num_of_upvotes__gte=2, proposal_revised=False),
             'ready_to_send_proposals': Proposal.objects.filter(proposal_revised=True, sent=False),
         }

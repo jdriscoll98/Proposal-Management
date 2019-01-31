@@ -62,8 +62,13 @@ h5 {
           <tr id="row-{{proposal.pk}}">
             <td><a href="{% url 'proposal:view_proposal' proposal.pk %}">{{ proposal.name }}</a></td>
             <td>{{ proposal.date_added|date:"M d"}}</td>
-            <td> {{ proposal.status }}
-              </td>
+            <td>
+            <select id="{{ proposal.pk }}" class="status">
+              <option value="pending">Pending</option>
+              <option value="accepted">Accepted</option>
+              <option value="denied">denied</option>
+          </select>
+          </td>
             <td>
             <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>
             </td>
@@ -77,5 +82,23 @@ h5 {
 
 {% block js %}
 <script>
-  </script>
+//------------------------------------------------------
+// change a proposals status
+$('.status').onchange(function(e){
+        var status = $(this).data('value');
+        var id = $(this).attr('id');
+        var url = $(this).attr('href');
+        setup_ajax();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data:{
+              'status': status
+              },
+            success: function(response) {
+                    });
+                }
+    );
+//------------------------------------------------------
+</script>
 {% endblock js %}
