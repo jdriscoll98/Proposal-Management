@@ -47,7 +47,6 @@ h5 {
         <th colspan="5" class="heading">
           <h2>
             Sent Proposals
-            <i class="fas fa-plus" href="{% url 'proposal:add_proposal' %}"></i>
           </h2>
         </th>
       </tr>
@@ -56,18 +55,83 @@ h5 {
         <tr>
           <th>Name</th>
           <th>Date Added</th>
-          <th>Status</th>
+          <th colspan="2">Status</th>
         </tr>
         {% for proposal in sent_proposals %}
           <tr id="row-{{proposal.pk}}">
             <td><a href="{% url 'proposal:view_proposal' proposal.pk %}">{{ proposal.name }}</a></td>
             <td>{{ proposal.date_added|date:"M d"}}</td>
             <td>
-            <select href="" id="{{ proposal.pk }}" class="status">
-              <option value="pending">Pending</option>
-              <option value="accepted">Accepted</option>
-              <option value="denied">denied</option>
-          </select>
+              <a class="btn btn-success status" href="{% url 'proposal:update_proposal_status' pk=proposal.pk status='accepted' %}">Accepted</a>
+              <a class="btn btn-danger status" href="{% url 'proposal:update_proposal_status' pk=proposal.pk status='rejected' %}">Rejected</a>
+          </td>
+            <td>
+            <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+</div>
+<div class="row">
+  <div class="col-sm-10 offset-sm-1">
+      <table id="proposal-table" class="table">
+        <thead>
+      <tr>
+        <th colspan="5" class="heading">
+          <h2>
+            Accepted Proposals
+          </h2>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <th>Name</th>
+          <th>Date Added</th>
+          <th >Status</th>
+        </tr>
+        {% for proposal in accepted_proposals %}
+          <tr id="row-{{proposal.pk}}">
+            <td><a href="{% url 'proposal:view_proposal' proposal.pk %}">{{ proposal.name }}</a></td>
+            <td>{{ proposal.date_added|date:"M d"}}</td>
+            <td>
+              {{ proposal.status }}
+          </td>
+            <td>
+            <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+</div>
+<div class="row">
+  <div class="col-sm-10 offset-sm-1">
+      <table id="proposal-table" class="table">
+        <thead>
+      <tr>
+        <th colspan="5" class="heading">
+          <h2>
+            Rejected Proposals
+          </h2>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <th>Name</th>
+          <th>Date Added</th>
+          <th >Status</th>
+        </tr>
+        {% for proposal in rejected_proposals %}
+          <tr id="row-{{proposal.pk}}">
+            <td><a href="{% url 'proposal:view_proposal' proposal.pk %}">{{ proposal.name }}</a></td>
+            <td>{{ proposal.date_added|date:"M d"}}</td>
+            <td>
+              <i class="btn btn-danger">{{ proposal.status }}</i>
           </td>
             <td>
             <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>
@@ -84,12 +148,12 @@ h5 {
 <script>
 //------------------------------------------------------
 // change a proposals status
-$('.status').change(function(){
+$('.status').click(function(){
   var status = $(this).attr('value');
-  if(confirm("Confirm this proposal has been sent")) {
+  if(confirm("Confirm you want to update this proposal's status")) {
     $.get($(this).attr('href'), {}, function(data) {
       if(data.success) {
-        alert("Successfly sent!");
+        alert("Successfly updated proposal status!");
         location.reload();
       }
       else {

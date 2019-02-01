@@ -113,5 +113,7 @@ class SentProposalView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = {
             'sent_proposals' : Proposal.objects.filter(status='sent'),
+            'accepted_proposals': Proposal.objects.filter(status='accepted'),
+            'rejected_proposals': Proposal.objects.filter(status='rejected')
         }
         return context
