@@ -64,9 +64,11 @@ h5 {
               <td>{{ proposal.date_added|date:"M d"}}</td>
               <td>
                 <i class="btn btn-success vote" href="{% url 'proposal:vote_proposal' pk=proposal.pk vote='Yes' %}">Yes</i>
+                <text>{{ proposal.num_of_upvotes }}</text>
                 </td>
               <td>
                 <i class="btn btn-danger vote" href="{% url 'proposal:vote_proposal' pk=proposal.pk vote='No' %}">No</i>
+                <text>{{ proposal.num_of_downvotes }}</text>
                 </td>
               <td>
               <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>

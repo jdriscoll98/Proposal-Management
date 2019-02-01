@@ -36,7 +36,7 @@ class Proposal(models.Model):
         return Comment.objects.filter(proposal=self)
 
 class Vote(models.Model):
-    user = models.OneToOneField(User, default=None, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
     decision = models.CharField(max_length = 3, choices=(('Yes', 'Yes'), ('No', 'No')))
     proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE)
 
