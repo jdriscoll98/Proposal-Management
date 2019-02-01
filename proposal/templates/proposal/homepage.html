@@ -102,7 +102,7 @@ h5 {
               <td><a href="{% url 'proposal:view_proposal' proposal.pk %}">{{ proposal.name }}</a></td>
               <td>{{ proposal.date_added|date:"M d"}}</td>
               <td>
-                <i class="btn btn-success revised" href="{% url 'proposal:update_proposal_status' pk=proposal.pk status='revised' %}">Ready to Send</i>
+                <i class="btn btn-success status" href="{% url 'proposal:update_proposal_status' pk=proposal.pk status='revised' %}">Ready to Send</i>
                 </td>
               <td>
               <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>
@@ -136,7 +136,7 @@ h5 {
               <td><a href="{% url 'proposal:view_proposal' proposal.pk %}">{{ proposal.name }}</a></td>
               <td>{{ proposal.date_added|date:"M d"}}</td>
               <td>
-                <i class="btn btn-success send" href="{% url 'proposal:update_proposal_status' pk=proposal.pk status='sent' %}">Send</i>
+                <i class="btn btn-success status" href="{% url 'proposal:update_proposal_status' pk=proposal.pk status='sent' %}">Send</i>
                 </td>
               <td>
               <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>
@@ -189,12 +189,12 @@ $('.vote').click(function() {
   }
 });
 // Mark a proposal as ready to send
-$('.revised').click(function() {
+$('.status').click(function() {
   var id = $(this).attr('id');
-  if(confirm("Confirm this proposal is ready to send")) {
+  if(confirm("Confirm you want to update this proposal's status")) {
     $.get($(this).attr('href'), {}, function(data) {
       if(data.success) {
-        alert("Successfly revised!");
+        alert("Successfly updated!");
         location.reload();
       }
       else {
@@ -204,20 +204,20 @@ $('.revised').click(function() {
   }
 });
 // send a proposal
-$('.send').click(function() {
-  var id = $(this).attr('id');
-  if(confirm("Confirm this proposal has been sent")) {
-    $.get($(this).attr('href'), {}, function(data) {
-      if(data.success) {
-        alert("Successfly sent!");
-        location.reload();
-      }
-      else {
-        console.log("Could not update this proposal at this time!");
-      }
-    });
-  }
-});
+// $('.send').click(function() {
+//   var id = $(this).attr('id');
+//   if(confirm("Confirm this proposal has been sent")) {
+//     $.get($(this).attr('href'), {}, function(data) {
+//       if(data.success) {
+//         alert("Successfly sent!");
+//         location.reload();
+//       }
+//       else {
+//         console.log("Could not update this proposal at this time!");
+//       }
+//     });
+//   }
+// });
 // Delete a Proposal
 $('.fa-trash-alt').click(function() {
   var id = $(this).attr('id');

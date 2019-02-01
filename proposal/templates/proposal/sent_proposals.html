@@ -131,7 +131,7 @@ h5 {
             <td><a href="{% url 'proposal:view_proposal' proposal.pk %}">{{ proposal.name }}</a></td>
             <td>{{ proposal.date_added|date:"M d"}}</td>
             <td>
-              <i class="btn btn-danger">{{ proposal.status }}</i>
+              {{ proposal.status }}
           </td>
             <td>
             <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>
