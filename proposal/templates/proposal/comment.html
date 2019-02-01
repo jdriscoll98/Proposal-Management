@@ -58,29 +58,27 @@ text, .alert-warning {
       </thead>
       <tbody>
         <tr>
-          <td>
+          <td class="center">
             <form method="POST">{% csrf_token %}
                 {% for error in form.text.errors %}
                   <div class="alert alert-danger">
                       <strong>{{ error|escape }}</strong>
                   </div>
                 {% endfor %}
-                <text class="input-label">Comment</text><br />
-                {{ form.text }}<br /><br />
+                <text class="input-label">Comment</text><br/>
+                {{ form.text }}
                 {% for error in form.author.errors %}
                   <div class="alert alert-danger">
                       <strong>{{ error|escape }}</strong>
                   </div>
                 {% endfor %}
-                <text class="input-label">From:</text><br />
-                {{ form.author }}<br /><br />
+                {{ form.author.as_hidden }}
                 {% for error in form.proposal.errors %}
                   <div class="alert alert-danger">
                       <strong>{{ error|escape }}</strong>
                   </div>
                 {% endfor %}
-                <text class="input-label">{{ form.label.proposal }}</text><br />
-                {{ form.proposal }}<br /><br />
+                {{ form.proposal.as_hidden }}
                 <input type="hidden" name="next" value="{{ next }}">
               <button class="btn btn-success col-12">Save Comment</button>
             </form>
