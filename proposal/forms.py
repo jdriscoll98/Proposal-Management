@@ -8,6 +8,8 @@ class ProposalForm(forms.ModelForm):
         fields = ['name', 'type', 'budget',
                     'job_link', 'proposal_link']
 
+
+
 class CommentForm(forms.ModelForm):
     text = forms.CharField(widget=forms.Textarea)
     class Meta:

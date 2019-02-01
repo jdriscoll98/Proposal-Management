@@ -17,7 +17,7 @@ class Proposal(models.Model):
     date_added = models.DateTimeField(auto_now=True)
     type = models.CharField(max_length=100) # type of job: website: app: smart solution
     budget = models.IntegerField() # price of job
-    job_link = models.URLField(null=True) # link to job if from online source
+    job_link = models.URLField(null=True, unique=True) # link to job if from online source
     proposal_link = models.URLField(null=True) # link to proposal if online
     num_of_upvotes = models.IntegerField(default=0) # votes to send proposal to lient
     num_of_downvotes = models.IntegerField(default=0) # votes to ~not~ send proposal to lient
