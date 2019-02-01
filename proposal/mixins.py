@@ -1,4 +1,6 @@
 from django.http import JsonResponse
+from django.core.exceptions import PermissionDenied
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 
 # a mixin to add AJAX support to a form
@@ -18,3 +20,10 @@ class AjaxFormResponseMixin(object):
 
         # return the context as json
         return JsonResponse(self.get_context_data(context))
+
+
+class StaffRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        if self.request.user.is_staff:
+            return True
+        raise PermissionDenied

@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from proposal.mixins import AjaxFormResponseMixin
+from proposal.mixins import StaffRequiredMixin
 
 from django.http import JsonResponse
 
@@ -46,7 +46,7 @@ class UpdateAjaxView(UpdateProposalView):
         else: # if not, returns a normal response
             return super(UpdateProposalView ,self).render_to_response(context, **response_kwargs)
 
-class ProposalVoteView(UpdateAjaxView):
+class ProposalVoteView(StaffRequiredMixin, UpdateAjaxView):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         if kwargs['vote'] == 'Yes':
