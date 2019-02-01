@@ -165,25 +165,25 @@ $('.vote').click(function() {
   console.log("Voting\n");
   var id = $(this).attr('id');
   if(confirm("Confirm you would like to vote on this propsoal")) {
-    // $.get($(this).attr('href'), {}, function(data) {
-    //   if(data.success) {
-    //     alert("Successfly voted!");
-    //     location.reload();
-    //   }
-    //   else {
-    //     alert("Could not vote on this proposal at this time!");
-    //   }
-    // });
-    $.ajax({
-      type: "GET",
-      url: $(this).attr('href'),
-      success: function() {
-        alert("Your vote has been recorded.")
-      },
-      failure:function() {
-        alert("You are not permitted to vote.")
+    $.get($(this).attr('href'), {}, function(data) {
+      if(data.success) {
+        alert("Successfly voted!");
+        location.reload();
+      }
+      else {
+        alert("You have already voted on this proposal!");
       }
     });
+    // $.ajax({
+    //   type: "GET",
+    //   url: $(this).attr('href'),
+    //   success: function() {
+    //     alert("Your vote has been recorded.")
+    //   },
+    //   failure:function() {
+    //     alert("You are not permitted to vote.")
+    //   }
+    // });
   }
 });
 // Mark a proposal as ready to send
