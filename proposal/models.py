@@ -9,6 +9,7 @@ class Proposal(models.Model):
         ('sent', 'sent'),
         ('accepted', 'accepted'),
         ('pending', 'pending'),
+        ('ready_to_revise', 'ready_to_revise'),
         ('rejected', 'rejected'),
     )
 
@@ -35,9 +36,12 @@ class Proposal(models.Model):
         return Comment.objects.filter(proposal=self)
 
 class Vote(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, default=None, on_delete=models.CASCADE)
     decision = models.CharField(max_length = 3, choices=(('Yes', 'Yes'), ('No', 'No')))
     proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.proposal) + ' | ' + str(self.user) + ' | ' + str(self.decision)
 
 class Comment(models.Model):
     text = models.CharField(max_length=1000)

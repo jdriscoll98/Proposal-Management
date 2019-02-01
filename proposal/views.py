@@ -9,6 +9,8 @@ from proposal.mixins import StaffRequiredMixin
 
 from django.http import JsonResponse
 
+from proposal.utils import create_vote
+
 from proposal.models import Proposal, Comment
 from proposal.forms import ProposalForm, CommentForm
 
@@ -18,9 +20,9 @@ class HomepageView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = {
-            'open_proposals' : Proposal.objects.filter(sent=False, num_of_upvotes__lt=2, num_of_downvotes__lt=2),
-            'ready_to_revise_proposals': Proposal.objects.filter(num_of_upvotes__gte=2, proposal_revised=False),
-            'ready_to_send_proposals': Proposal.objects.filter(proposal_revised=True, sent=False),
+            'open_proposals' : Proposal.objects.filter(status='pending',),
+            'ready_to_revise_proposals': Proposal.objects.filter(status='ready_to_revise'),
+            'ready_to_send_proposals': Proposal.objects.filter(status='revised'),
         }
         return context
 
@@ -39,40 +41,35 @@ class UpdateProposalView(LoginRequiredMixin, UpdateView):
     form_class = ProposalForm
     success_url = reverse_lazy('proposal:homepage')
 
-class UpdateAjaxView(UpdateProposalView):
     def render_to_response(self, context, **response_kwargs):
         if self.request.is_ajax(): #checks if the request is ajax
             return JsonResponse({'success': True}, safe=False, **response_kwargs)
         else: # if not, returns a normal response
             return super(UpdateProposalView ,self).render_to_response(context, **response_kwargs)
 
-class ProposalVoteView(StaffRequiredMixin, UpdateAjaxView):
+class ProposalUpdateStatusView(UpdateProposalView):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if kwargs['vote'] == 'Yes':
-            self.object.num_of_upvotes += 1
-        else:
-            self.object.num_of_downvotes += 1
+        self.object.status = kwargs['status']
         self.object.save()
         context = self.get_context_data(object=self.object) # we dont need this but its safe to have
         return self.render_to_response(context)
 
-class ProposalRevisedView(UpdateAjaxView):
+class ProposalVoteView(StaffRequiredMixin, CreateView):
     def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        self.object.proposal_revised = True
-        self.object.save()
-        context = self.get_context_data(object=self.object) # we dont need this but its safe to have
-        return self.render_to_response(context)
+        user = request.user
+        proposal = Proposal.objects.get(pk=kwargs['pk'])
+        decision = kwargs['vote']
+        success = create_vote(user, proposal, decision)
+        return self.render_to_response(success)
 
-class SendProposalView(UpdateAjaxView):
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        self.object.ready_to_revise = False
-        self.object.sent = True
-        self.object.save()
-        context = self.get_context_data(object=self.object) # we dont need this but its safe to have
-        return self.render_to_response(context)
+    def render_to_response(self, success, **response_kwargs):
+        if self.request.is_ajax(): #checks if the request is ajax
+            return JsonResponse({'success': success}, safe=False, **response_kwargs)
+        else: # if not, returns a normal response
+            return super(UpdateProposalView ,self).render_to_response(context, **response_kwargs)
+
+
 
 class DeleteProposalView(LoginRequiredMixin, DeleteView):
     model = Proposal
@@ -115,6 +112,6 @@ class SentProposalView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = {
-            'sent_proposals' : Proposal.objects.filter(sent=True),
+            'sent_proposals' : Proposal.objects.filter(status='sent'),
         }
         return context

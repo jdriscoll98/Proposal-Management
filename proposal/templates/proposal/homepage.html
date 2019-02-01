@@ -100,7 +100,7 @@ h5 {
               <td><a href="{% url 'proposal:view_proposal' proposal.pk %}">{{ proposal.name }}</a></td>
               <td>{{ proposal.date_added|date:"M d"}}</td>
               <td>
-                <i class="btn btn-success revised" href="{% url 'proposal:revise_proposal' pk=proposal.pk %}">Ready to Send</i>
+                <i class="btn btn-success revised" href="{% url 'proposal:update_proposal_status' pk=proposal.pk status='revised' %}">Ready to Send</i>
                 </td>
               <td>
               <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>
@@ -134,7 +134,7 @@ h5 {
               <td><a href="{% url 'proposal:view_proposal' proposal.pk %}">{{ proposal.name }}</a></td>
               <td>{{ proposal.date_added|date:"M d"}}</td>
               <td>
-                <i class="btn btn-success send" href="{% url 'proposal:send_proposal' pk=proposal.pk %}">Send</i>
+                <i class="btn btn-success send" href="{% url 'proposal:update_proposal_status' pk=proposal.pk status='sent' %}">Send</i>
                 </td>
               <td>
               <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>
