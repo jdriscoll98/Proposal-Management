@@ -13,9 +13,9 @@
 		<!-- CSS -->
 			<!-- Latest compiled and minified CSS -->
 			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-			<link rel="stylesheet" href="{% static 'website/css/style.css' %}"/>
 			<link rel="stylesheet" href="{% static 'website/css/bootstrap.min.css' %}">
 			<link rel="stylesheet" href="{% static 'website/css/animate.css' %}"/>
+			<link rel="stylesheet" href="{% static 'website/css/style.css' %}"/>
 			{% block custom_css %}
 			{% endblock custom_css %}
 
@@ -37,6 +37,9 @@
 
 	</head>
 	<body>
+
+		{% include 'website/navbar.html' %}
+
 		{% block content %}
 		{% endblock content %}
 

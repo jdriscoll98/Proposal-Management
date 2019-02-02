@@ -15,3 +15,18 @@ a.navbar-brand {
 .navbar-brand:hover{
   color: yellow;
 }
+
+:root {
+  --main-color: black;
+  --secondary-color: #08f;
+  --container-corner-radius: 10px;
+  --title-size: 25px;
+}
+
+.navbar-dark, .bg-dark{
+  background-color: black !important;
+}
+
+.fa:hover, .far:hover, .fas:hover {
+  cursor: pointer;
+}
