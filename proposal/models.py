@@ -11,6 +11,7 @@ class Proposal(models.Model):
         ('pending', 'pending'),
         ('ready_to_revise', 'ready_to_revise'),
         ('rejected', 'rejected'),
+        ('team_denied', 'team_denied'),
     )
 
     name = models.CharField(max_length=100) #name to remember client by
@@ -26,8 +27,15 @@ class Proposal(models.Model):
     def __str__(self):
         return str(self.name)
 
-    def ready_to_revise(self):
-        if self.num_of_upvotes >= 2:
+    def ready_to_revise(proposal):
+        print(str(int(User.objects.filter(is_staff=True).count / 2) + 1))
+        if proposal.num_of_upvotes >= ((User.objects.filter(is_staff=True).count() / 2) + 1):
+            return True
+        else:
+            return False
+
+    def denied_by_team(self):
+        if self.num_of_downvotes >= (int(User.objects.filter(is_staff=True).count / 2) + 1):
             return True
         else:
             return False
