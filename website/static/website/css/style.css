@@ -1,32 +1,29 @@
-.primary{
-  color: lightYellow ;
-  background-color: red;
-}
 
-.primary:focus, .my-primary:hover{
-  color: yellow ;
-  background-color: darkRed;
-}
-
-a.navbar-brand {
-  color: lightYellow ;
-}
-
-.navbar-brand:hover{
-  color: yellow;
+table {
+  -webkit-box-shadow: 0px 2px 5px 2px rgba(168,168,168,1);
+  -moz-box-shadow: 0px 2px 5px 2px rgba(168,168,168,1);
+  box-shadow: 0px 2px 5px 2px rgba(168,168,168,1);
+  margin-top: 50px;
 }
 
 :root {
   --main-color: black;
-  --secondary-color: #08f;
+  --secondary-color: #003366;
+  --primary-color: #fd6c53;
   --container-corner-radius: 10px;
   --title-size: 25px;
 }
 
 .navbar-dark, .bg-dark{
-  background-color: black !important;
+  background-color: var(--secondary-color) !important;
 }
 
 .fa:hover, .far:hover, .fas:hover {
   cursor: pointer;
+}
+
+.heading {
+  background-color: var(--primary-color);
+  color: white;
+  text-align: center;
 }

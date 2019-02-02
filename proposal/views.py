@@ -105,7 +105,7 @@ class AddCommentView(LoginRequiredMixin, CreateView):
         proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
         return {
             'proposal': proposal ,
-            'author': self.request.user, 
+            'author': self.request.user,
         }
 
 class SentProposalView(LoginRequiredMixin, TemplateView):
