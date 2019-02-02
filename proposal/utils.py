@@ -1,25 +1,27 @@
 from proposal.models import Vote, Proposal
 
 def create_vote(user, proposal, decision):
+    success = False
+
     try:
         if not Vote.objects.filter(user=user, proposal=proposal).exists():
             Vote.objects.create(user=user, proposal=proposal, decision=decision)
             success = True
-            if decision == 'Yes':
+
+            if decision.lower() == "yes":
                 proposal.num_of_upvotes += 1
-                try:
-                    Proposal.ready_to_revise(proposal)
-                    proposal.status = 'ready_to_revise'
-                    print('ready')
-                except Exception as e:
-                    print(e)
             else:
                 proposal.num_of_downvotes += 1
-                if proposal.denied_by_team:
-                    proposal.status = 'team_denied'
+
+            if Proposal.ready_to_revise():
+                proposal.accepted()
+
+            elif proposal.denied_by_team():
+                proposal.denied()
+
             proposal.save()
-        else:
-            success = False
-    except:
-        success = False
+
+    except Exception as e:
+        print(str(e))
+
     return success

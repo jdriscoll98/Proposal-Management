@@ -27,18 +27,19 @@ class Proposal(models.Model):
     def __str__(self):
         return str(self.name)
 
-    def ready_to_revise(proposal):
-        print(str(int(User.objects.filter(is_staff=True).count / 2) + 1))
-        if proposal.num_of_upvotes >= ((User.objects.filter(is_staff=True).count() / 2) + 1):
-            return True
-        else:
-            return False
+    def ready_to_revise(self):
+        return (True if self.num_of_upvotes >= len(User.objects.filter(is_staff=True))/2 + 1 else False)
 
     def denied_by_team(self):
-        if self.num_of_downvotes >= (int(User.objects.filter(is_staff=True).count / 2) + 1):
-            return True
-        else:
-            return False
+        return (True if self.num_of_downvotes >= len(User.objects.filter(is_staff=True))/2 + 1 else False)
+
+    def accepted(self):
+        self.status = 'accepted'
+        self.save()
+
+    def denied(self):
+        self.status = 'team_denied'
+        self.save()
 
     def has_comments(self):
         return Comment.objects.filter(proposal=self)
