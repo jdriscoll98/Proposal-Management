@@ -28,7 +28,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Email Backend
 
-EMAIL_HOST = 'smtp-relay.gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'TMProposalManagement@gmail.com'
+EMAIL_HOST_PASSWORD = 'pmrnxnquevxjbdvp'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

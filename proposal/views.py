@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.conf import settings
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView
@@ -13,6 +14,8 @@ from proposal.utils import create_vote
 
 from proposal.models import Proposal, Comment
 from proposal.forms import ProposalForm, CommentForm
+
+from django.core.mail import send_mail
 
 # Create your views here.
 class HomepageView(LoginRequiredMixin, TemplateView):
@@ -31,6 +34,17 @@ class AddPropsalView(LoginRequiredMixin, CreateView):
     model = Proposal
     form_class = ProposalForm
     success_url = reverse_lazy('proposal:homepage')
+
+    def form_valid(self, form):
+        send_mail(
+            subject="New Proposal",
+            message="A new proposal has been added for vote!",
+            from_email = settings.EMAIL_HOST_USER,
+            recipient_list=['admin@techandmech.com'],
+            fail_silently=False
+        )
+        return super().form_valid(form)
+
 
 class ViewProposalView(LoginRequiredMixin, DetailView):
     model = Proposal
@@ -52,6 +66,13 @@ class ProposalUpdateStatusView(UpdateProposalView):
         self.object = self.get_object()
         self.object.status = kwargs['status']
         self.object.save()
+        if kwargs['status'] == 'revised':
+            send_mail(
+                subject="Revised Proposal",
+                message="A proposal is ready to send!",
+                from_email = settings.EMAIL_HOST_USER,
+                recipient_list=['admin@techandmech.com']
+            )
         context = self.get_context_data(object=self.object) # we dont need this but its safe to have
         return self.render_to_response(context)
 

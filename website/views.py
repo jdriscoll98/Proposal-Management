@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.contrib import messages
@@ -9,10 +10,10 @@ import datetime
 from datetime import timedelta
 from django.utils import timezone
 
-from django.views.generic.base import TemplateView
-
+from django.views.generic.base import TemplateView, RedirectView
 #-------------------------------------------------------------------------------
 # Page Views
 #-------------------------------------------------------------------------------
-class HomepageView(TemplateView):
-    template_name = 'website/homepage.html'
+class HomepageView(RedirectView):
+    permanent = True
+    url = reverse_lazy('proposal:homepage')

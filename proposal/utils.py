@@ -1,4 +1,5 @@
 from proposal.models import Vote, Proposal
+from django.core.mail import send_mail
 
 def create_vote(user, proposal, decision):
     success = False
@@ -15,7 +16,14 @@ def create_vote(user, proposal, decision):
                         proposal.num_of_downvotes += 1
 
                     if proposal.ready_to_revise():
-                        proposal.accepted()
+                        proposal.status = 'ready_to_revise'
+                        send_mail(
+                            subject="Proposal ready to be revised",
+                            message="A new proposal is ready to be revised!",
+                            from_email = settings.EMAIL_HOST_USER,
+                            recipient_list=['admin@techandmech.com']
+                        )
+
 
                     elif proposal.denied_by_team():
                         proposal.denied()
@@ -34,13 +42,19 @@ def create_vote(user, proposal, decision):
                     proposal.num_of_upvotes -= 1
 
                 if proposal.ready_to_revise():
-                    proposal.accepted()
+                    proposal.status = 'ready_to_revise'
+                    send_mail(
+                        subject="Proposal ready to be revised",
+                        from_email = settings.EMAIL_HOST_USER,
+                        message="A new proposal is ready to be revised!",
+                        recipient_list=['admin@techandmech.com']
+                    )
 
                 elif proposal.denied_by_team():
                     proposal.denied()
 
                 proposal.save()
-                
+
                 success = True
 
     except Exception as e:

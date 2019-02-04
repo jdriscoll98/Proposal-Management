@@ -33,10 +33,6 @@ class Proposal(models.Model):
     def denied_by_team(self):
         return (True if self.num_of_downvotes >= len(User.objects.filter(is_staff=True))/2 + 1 else False)
 
-    def accepted(self):
-        self.status = 'accepted'
-        self.save()
-
     def denied(self):
         self.status = 'team_denied'
         self.save()
