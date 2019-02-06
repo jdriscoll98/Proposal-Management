@@ -6,7 +6,8 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from proposal.mixins import StaffRequiredMixin
+from proposal.mixins import CanVoteMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from django.http import JsonResponse
 
@@ -76,8 +77,10 @@ class ProposalUpdateStatusView(UpdateProposalView):
         context = self.get_context_data(object=self.object) # we dont need this but its safe to have
         return self.render_to_response(context)
 
-class ProposalVoteView(StaffRequiredMixin, CreateView):
+class ProposalVoteView(PermissionRequiredMixin, CreateView):
+    permission_required = 'proposal.add_vote'
     def get(self, request, *args, **kwargs):
+        print('here')
         user = request.user
         proposal = Proposal.objects.get(pk=kwargs['pk'])
         decision = kwargs['vote']

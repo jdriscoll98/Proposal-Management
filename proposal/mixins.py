@@ -20,10 +20,3 @@ class AjaxFormResponseMixin(object):
 
         # return the context as json
         return JsonResponse(self.get_context_data(context))
-
-
-class StaffRequiredMixin(UserPassesTestMixin):
-    def test_func(self):
-        if self.request.user.is_staff:
-            return True
-        raise PermissionDenied
