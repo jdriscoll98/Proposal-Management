@@ -6,7 +6,6 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from proposal.mixins import CanVoteMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from django.http import JsonResponse
