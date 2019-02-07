@@ -34,7 +34,7 @@ td:nth-child(odd) {
 
 {% block content %}
 <div class="row">
-  <div class="col-md-6 offset-sm-3">
+  <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2">
     <table class="table">
       <thead>
         <tr>
@@ -86,7 +86,8 @@ td:nth-child(odd) {
         </tr>
       </tbody>
     </table>
-    <a href="{% url 'proposal:add_comment' object.pk %}"class="btn btn-success col-12">Comment on Proposal</a>
+    <a href="{% url 'proposal:homepage' %}"class="btn btn-danger col-1">Back</a>
+    <a href="{% url 'proposal:add_comment' object.pk %}"class="btn btn-success col-6 offset-3">Comment on Proposal</a>
     {% if object.has_comments %}
     <table id="monitors-table" class="table">
       <thead>

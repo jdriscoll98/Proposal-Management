@@ -126,32 +126,16 @@
 $('.fa-plus').click(function() {
   window.location.href = $(this).attr('href');
 });
+
 // vote on a proposal
 $('.vote').click(function() {
-  console.log("Voting\n");
   var id = $(this).attr('id');
-  if(confirm("Confirm you would like to vote on this propsoal")) {
-    $.get($(this).attr('href'), {}, function(data) {
-      if(data.success) {
-        alert("Successfly voted!");
-        location.reload();
-      }
-      else {
-        alert("You have already voted on this proposal!");
-      }
-    });
-    // $.ajax({
-    //   type: "GET",
-    //   url: $(this).attr('href'),
-    //   success: function() {
-    //     alert("Your vote has been recorded.")
-    //   },
-    //   failure:function() {
-    //     alert("You are not permitted to vote.")
-    //   }
-    // });
-  }
+  $.get($(this).attr('href'), {}, function(data) {
+    if(data.success) { location.reload(); }
+    else { alert("You have already voted on this proposal!"); }
+  });
 });
+
 // Mark a proposal as ready to send
 $('.status').click(function() {
   var id = $(this).attr('id');
@@ -167,6 +151,7 @@ $('.status').click(function() {
     });
   }
 });
+
 // send a proposal
 // $('.send').click(function() {
 //   var id = $(this).attr('id');
@@ -182,6 +167,7 @@ $('.status').click(function() {
 //     });
 //   }
 // });
+
 // Delete a Proposal
 $('.fa-trash-alt').click(function() {
   var id = $(this).attr('id');
