@@ -2,9 +2,14 @@
 
 {% block custom_css %}
 <style>
-.fa-plus {
-  color white;
-  margin-left: 15px;
+.yes {
+  color: green;
+}
+.no {
+  color: red;
+}
+.vote:hover {
+  cursor:pointer;
 }
 </style>
 {% endblock custom_css %}
@@ -19,7 +24,7 @@
           <tr>
             <th colspan="5" class="heading">
               <h2>
-                Open Proposals
+                New Proposals
                 <i class="fas fa-plus" href="{% url 'proposal:add_proposal' %}"></i>
               </h2>
             </th>
@@ -29,7 +34,7 @@
           <tr>
             <th>Name</th>
             <th>Date Added</th>
-            <th class="center" colspan="2" >Vote(Y/N)</th>
+            <th class="center" colspan="2" >Your Vote</th>
           </tr>
           {% for proposal in open_proposals %}
           <tr id="row-{{proposal.pk}}">
@@ -37,11 +42,11 @@
             <td>{{ proposal.date_added|date:"M d"}}</td>
             <td>
               <text>{{ proposal.num_of_upvotes }}</text>
-              <i class="btn btn-success vote" href="{% url 'proposal:vote_proposal' pk=proposal.pk vote='Yes' %}">Yes</i>
+              <i class="vote yes" href="{% url 'proposal:vote_proposal' pk=proposal.pk vote='Yes' %}">Yes</i>
             </td>
             <td>
               <text>{{ proposal.num_of_downvotes }}</text>
-              <i class="btn btn-danger vote" href="{% url 'proposal:vote_proposal' pk=proposal.pk vote='No' %}">No</i>
+              <i class="vote no" href="{% url 'proposal:vote_proposal' pk=proposal.pk vote='No' %}">No</i>
             </td>
             <td>
               <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>
@@ -57,7 +62,7 @@
           <tr>
             <th colspan="5" class="heading">
               <h2>
-                Ready to Revise Proposals
+                Ready to Revise
               </h2>
             </th>
           </tr>
@@ -89,7 +94,7 @@
       <tr>
         <th colspan="5" class="heading">
           <h2>
-            Ready to Send Proposals
+            Ready to Send
           </h2>
         </th>
       </tr>
