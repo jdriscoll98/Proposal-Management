@@ -27,11 +27,17 @@ class Proposal(models.Model):
     def __str__(self):
         return str(self.name)
 
+    def num_of_upvotes(self):
+        return len(Vote.objects.filter(proposal=self, decision='Yes'))
+
+    def num_of_downvotes(self):
+        return len(Vote.objects.filter(proposal=self, decision='No'))
+
     def ready_to_revise(self):
-        return (True if self.num_of_upvotes >= len(User.objects.filter(is_staff=True))/2 + 1 else False)
+        return (True if self.num_of_upvotes() >= len(User.objects.filter(is_staff=True))/2 + 1 else False)
 
     def denied_by_team(self):
-        return (True if self.num_of_downvotes >= len(User.objects.filter(is_staff=True))/2 + 1 else False)
+        return (True if self.num_of_downvotes() >= len(User.objects.filter(is_staff=True))/2 + 1 else False)
 
     def denied(self):
         self.status = 'team_denied'

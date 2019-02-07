@@ -56,18 +56,15 @@
                 {% endfor %}
                 <text class="input-label">{{ form.proposal_link.label }}</text><br />
                 {{ form.proposal_link }}<br /><br />
+                <button id="save" type="submit" class="btn btn-success col-8 offset-4 col-md-4 offset-md-4">Save Proposal</button>
             </form>
           </td>
         </tr>
       </tbody>
     </table>
-    <button id="save" class="btn btn-success col-8 offset-4 col-md-4 offset-md-4">Save Proposal</button>
 {% endblock content %}
 
 {% block js %}
 <script>
-  $('#save').click(function() {
-
-  });
 </script>
 {% endblock js %}

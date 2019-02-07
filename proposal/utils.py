@@ -1,5 +1,6 @@
 from proposal.models import Vote, Proposal
 from django.core.mail import send_mail
+from django.conf import settings
 
 def create_vote(user, proposal, decision):
     success = False
@@ -9,11 +10,6 @@ def create_vote(user, proposal, decision):
             if not Vote.objects.filter(user=user, proposal=proposal).exists():
                     Vote.objects.create(user=user, proposal=proposal, decision=decision)
                     success = True
-
-                    if decision.lower() == "yes":
-                        proposal.num_of_upvotes += 1
-                    else:
-                        proposal.num_of_downvotes += 1
 
                     if proposal.ready_to_revise():
                         proposal.status = 'ready_to_revise'
@@ -33,13 +29,6 @@ def create_vote(user, proposal, decision):
                 vote = Vote.objects.get(user=user, proposal=proposal)
                 vote.decision = decision
                 vote.save()
-
-                if decision.lower() == "yes":
-                    proposal.num_of_upvotes += 1
-                    proposal.num_of_downvotes -= 1
-                else:
-                    proposal.num_of_downvotes += 1
-                    proposal.num_of_upvotes -= 1
 
                 if proposal.ready_to_revise():
                     proposal.status = 'ready_to_revise'
