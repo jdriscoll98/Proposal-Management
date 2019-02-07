@@ -86,8 +86,8 @@ td:nth-child(odd) {
         </tr>
       </tbody>
     </table>
-    <a href="{% url 'proposal:homepage' %}"class="btn btn-danger col-1">Back</a>
-    <a href="{% url 'proposal:add_comment' object.pk %}"class="btn btn-success col-6 offset-3">Comment on Proposal</a>
+    <a href="{% url 'proposal:homepage' %}"class="btn btn-danger col-5 col-md-1">Back</a>
+    <a href="{% url 'proposal:add_comment' object.pk %}"class="btn btn-success col-5 offset-1 offset-sm-0 col-md-3 col-lg-2">Add Comment</a>
     {% if object.has_comments %}
     <table id="monitors-table" class="table">
       <thead>
