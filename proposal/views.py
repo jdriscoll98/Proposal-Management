@@ -79,7 +79,6 @@ class ProposalUpdateStatusView(UpdateProposalView):
 class ProposalVoteView(PermissionRequiredMixin, CreateView):
     permission_required = 'proposal.add_vote'
     def get(self, request, *args, **kwargs):
-        print('here')
         user = request.user
         proposal = Proposal.objects.get(pk=kwargs['pk'])
         decision = kwargs['vote']

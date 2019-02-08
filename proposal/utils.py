@@ -46,7 +46,6 @@ def create_vote(user, proposal, decision):
 
                 success = True
 
-    except Exception as e:
-        print(str(e))
-
+    except:
+        pass
     return success

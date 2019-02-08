@@ -34,10 +34,10 @@ class Proposal(models.Model):
         return len(Vote.objects.filter(proposal=self, decision='No'))
 
     def ready_to_revise(self):
-        return (True if self.num_of_upvotes() >= len(User.objects.filter(is_staff=True))/2 + 1 else False)
+        return (True if self.num_of_upvotes() >= len(User.objects.filter(groups__name='vote'))/2 + 1 else False)
 
     def denied_by_team(self):
-        return (True if self.num_of_downvotes() >= len(User.objects.filter(is_staff=True))/2 + 1 else False)
+        return (True if self.num_of_downvotes() >= len(User.objects.filter(groups__name='vote'))/2 + 1 else False)
 
     def denied(self):
         self.status = 'team_denied'
