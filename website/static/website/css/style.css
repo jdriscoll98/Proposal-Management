@@ -50,6 +50,10 @@ input, select {
   margin-left: 2.5%;
 }
 
+.white {
+  background-color: white;
+}
+
 .input-label {
   margin-left: 2.5%;
   font-size: 25px;

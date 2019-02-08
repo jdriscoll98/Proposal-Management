@@ -57,68 +57,74 @@
       </table>
     </div>
     <div class="col">
-      <table id="proposal-table" class="table">
-        <thead>
+      <div class="row">
+        <div class="col">
+          <table id="proposal-table" class="table">
+            <thead>
+              <tr>
+                <th colspan="5" class="heading">
+                  <h2>
+                    Ready to Revise
+                  </h2>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>Name</th>
+                <th>Date Added</th>
+                <th class="center">Revised?</th>
+              </tr>
+              {% for proposal in ready_to_revise_proposals %}
+              <tr id="row-{{proposal.pk}}">
+                <td><a href="{% url 'proposal:view_proposal' proposal.pk %}">{{ proposal.name }}</a></td>
+                <td>{{ proposal.date_added|date:"M d"}}</td>
+                <td>
+                  <i class="btn btn-success status" href="{% url 'proposal:update_proposal_status' pk=proposal.pk status='revised' %}">Ready to Send</i>
+                </td>
+                <td>
+                  <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <table id="proposal-table" class="table">
+            <thead>
           <tr>
             <th colspan="5" class="heading">
               <h2>
-                Ready to Revise
+                Ready to Send
               </h2>
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th>Name</th>
-            <th>Date Added</th>
-            <th class="center">Revised?</th>
-          </tr>
-          {% for proposal in ready_to_revise_proposals %}
-          <tr id="row-{{proposal.pk}}">
-            <td><a href="{% url 'proposal:view_proposal' proposal.pk %}">{{ proposal.name }}</a></td>
-            <td>{{ proposal.date_added|date:"M d"}}</td>
-            <td>
-              <i class="btn btn-success status" href="{% url 'proposal:update_proposal_status' pk=proposal.pk status='revised' %}">Ready to Send</i>
-            </td>
-            <td>
-              <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-    <div class="col">
-      <table id="proposal-table" class="table">
-        <thead>
-      <tr>
-        <th colspan="5" class="heading">
-          <h2>
-            Ready to Send
-          </h2>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <th>Name</th>
-          <th>Date Added</th>
-          <th class="center">Send?</th>
-        </tr>
-        {% for proposal in ready_to_send_proposals %}
-          <tr id="row-{{proposal.pk}}">
-            <td><a href="{% url 'proposal:view_proposal' proposal.pk %}">{{ proposal.name }}</a></td>
-            <td>{{ proposal.date_added|date:"M d"}}</td>
-            <td>
-              <i class="btn btn-success status" href="{% url 'proposal:update_proposal_status' pk=proposal.pk status='sent' %}">Send</i>
-              </td>
-            <td>
-            <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>
-            </td>
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
+            <tr>
+              <th>Name</th>
+              <th>Date Added</th>
+              <th class="center">Send?</th>
+            </tr>
+            {% for proposal in ready_to_send_proposals %}
+              <tr id="row-{{proposal.pk}}">
+                <td><a href="{% url 'proposal:view_proposal' proposal.pk %}">{{ proposal.name }}</a></td>
+                <td>{{ proposal.date_added|date:"M d"}}</td>
+                <td>
+                  <i class="btn btn-success status" href="{% url 'proposal:update_proposal_status' pk=proposal.pk status='sent' %}">Send</i>
+                  </td>
+                <td>
+                <i id="{{proposal.pk}}" class="far fa-trash-alt" href="{% url 'proposal:delete_proposal' proposal.pk %}"></i>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>

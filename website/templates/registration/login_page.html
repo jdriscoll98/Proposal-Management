@@ -47,7 +47,6 @@
 	}
 
 	.col-md-4 {
-		background-color:#f7f7f7;
 		padding:30px;
 		border: 2px solid black;
 		border-radius: 10px;
@@ -57,19 +56,13 @@
 
 </br>
 <div class="container">
-	<div class="row">
-		<div class="col">
-			<div class = "col">
-					<h3 class="col-md-3 ">Proposal Management</h3>
-				</div>
-		</div>
-	</div>
-	<br />
+	<br /><br />
+	<h3 class="center">Proposal Management</h3>
 	{% if form.errors %}
 	<p>Your username and password didn't match. Please try again.</p>
 	{% endif %}
 	<div class="row">
-		<div class="col-md-4 offset-md-4">
+		<div class="col-md-4 offset-md-4 white">
 			<form id="recaptcha-form" method="post">
 				{% csrf_token %}
 				<strong>Username</strong>
@@ -79,9 +72,8 @@
 				{{ form.password }}
 				<input type="hidden" name="next" value="{{ next }}" />
 				<br /><br />
-				<button class="g-recaptcha btn btn-success col-md-8 " data-sitekey="{{ recaptcha_site_key }}" data-callback='onSubmit'>Login</button>
+				<button class="g-recaptcha btn btn-success col-md-12 " data-sitekey="{{ recaptcha_site_key }}" data-callback='onSubmit'>Login</button>
 			</form>
-			<br />
 		</div>
 	</div>
 </div>
