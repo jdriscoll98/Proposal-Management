@@ -17,7 +17,7 @@ def create_vote(user, proposal, decision):
                             subject="Proposal ready to be revised",
                             message="A new proposal is ready to be revised!",
                             from_email = settings.EMAIL_HOST_USER,
-                            recipient_list=['admin@techandmech.com']
+                            recipient_list=['admin@techandmech.com', 'eflannagan1@gmail.com']
                         )
 
 
@@ -36,7 +36,7 @@ def create_vote(user, proposal, decision):
                         subject="Proposal ready to be revised",
                         from_email = settings.EMAIL_HOST_USER,
                         message="A new proposal is ready to be revised!",
-                        recipient_list=['admin@techandmech.com']
+                        recipient_list=['admin@techandmech.com', 'eflannagan1@gmail.com']
                     )
 
                 elif proposal.denied_by_team():

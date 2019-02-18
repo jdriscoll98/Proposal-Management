@@ -40,7 +40,7 @@ class AddPropsalView(LoginRequiredMixin, CreateView):
             subject="New Proposal",
             message="A new proposal has been added for vote!",
             from_email = settings.EMAIL_HOST_USER,
-            recipient_list=['admin@techandmech.com'],
+            recipient_list=['admin@techandmech.com', 'eflannagan1@gmail.com'],
             fail_silently=False
         )
         return super().form_valid(form)
@@ -71,7 +71,7 @@ class ProposalUpdateStatusView(UpdateProposalView):
                 subject="Revised Proposal",
                 message="A proposal is ready to send!",
                 from_email = settings.EMAIL_HOST_USER,
-                recipient_list=['admin@techandmech.com']
+                recipient_list=['admin@techandmech.com', 'eflannagan1@gmail.com']
             )
         context = self.get_context_data(object=self.object) # we dont need this but its safe to have
         return self.render_to_response(context)
